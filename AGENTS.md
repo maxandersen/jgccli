@@ -40,7 +40,7 @@ dk.xam.jgccli/
 
 - **Commands:** Each subcommand is a separate class with `@Command` annotation
 - **Output:** `OutputFormatter` handles `--json` flag (JSON vs TSV output)
-- **Storage:** `AccountStorage` manages OAuth tokens in `~/.jgccli/`
+- **Storage:** `AccountStorage` manages OAuth tokens in `~/.jgcli/` (shared)
 - **Credentials:** Support multiple named credential sets
 
 ## Adding a New Command
@@ -95,9 +95,9 @@ java -jar target/quarkus-app/quarkus-run.jar --help
 
 ## Config & Data
 
-- `~/.jgccli/credentials.json` - Default OAuth client credentials
-- `~/.jgccli/credentials-<name>.json` - Named credential sets
-- `~/.jgccli/accounts.json` - Stored account tokens
+- `~/.jgcli/credentials.json` - OAuth client credentials (shared with jgmcli, jgdcli)
+- `~/.jgcli/credentials-<name>.json` - Named credential sets (shared)
+- `~/.jgcli/accounts-calendar.json` - Calendar account tokens
 
 ## Related Projects
 

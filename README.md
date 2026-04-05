@@ -215,9 +215,9 @@ jgccli acl you@gmail.com primary
 
 ## Data Storage
 
-All data is stored in `~/.jgccli/`:
-- `credentials.json` - OAuth client credentials
-- `accounts.json` - Account tokens
+All data is stored in `~/.jgcli/` (shared with jgmcli, jgdcli):
+- `credentials.json` - OAuth client credentials (shared)
+- `accounts-calendar.json` - Calendar account tokens
 
 ## License
 
