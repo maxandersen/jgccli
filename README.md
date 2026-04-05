@@ -11,7 +11,18 @@ Use **gccli** if you prefer Node.js/TypeScript.
 
 The command structure is identical, making it easy to switch between them.
 
-## Build
+## Run with JBang (no build required)
+
+```bash
+# Run directly from GitHub
+jbang https://github.com/maxandersen/jgccli/blob/main/src/main/java/main.java --help
+
+# Or clone and run locally
+jbang src/main/java/main.java --help
+jbang src/main/java/main.java accounts list
+```
+
+## Build with Maven
 
 ```bash
 # JVM build
