@@ -178,7 +178,8 @@ public class CalendarService {
     public Event createEvent(String email, String calendarId,
                              String summary, String description, String location,
                              String start, String end,
-                             List<String> attendees, boolean allDay) throws IOException {
+                             List<String> attendees, List<String> optionalAttendees, 
+                             boolean allDay) throws IOException {
         Calendar calendar = getCalendarClient(email);
 
         Event event = new Event()
@@ -194,10 +195,19 @@ public class CalendarService {
             event.setEnd(new EventDateTime().setDateTime(new DateTime(end)));
         }
 
+        List<EventAttendee> allAttendees = new java.util.ArrayList<>();
         if (attendees != null && !attendees.isEmpty()) {
-            event.setAttendees(attendees.stream()
-                .map(e -> new EventAttendee().setEmail(e))
-                .collect(Collectors.toList()));
+            attendees.stream()
+                .map(e -> new EventAttendee().setEmail(e.trim()))
+                .forEach(allAttendees::add);
+        }
+        if (optionalAttendees != null && !optionalAttendees.isEmpty()) {
+            optionalAttendees.stream()
+                .map(e -> new EventAttendee().setEmail(e.trim()).setOptional(true))
+                .forEach(allAttendees::add);
+        }
+        if (!allAttendees.isEmpty()) {
+            event.setAttendees(allAttendees);
         }
 
         return calendar.events().insert(calendarId, event).execute();
@@ -206,7 +216,8 @@ public class CalendarService {
     public Event updateEvent(String email, String calendarId, String eventId,
                              String summary, String description, String location,
                              String start, String end,
-                             List<String> attendees, Boolean allDay) throws IOException {
+                             List<String> attendees, List<String> optionalAttendees,
+                             Boolean allDay) throws IOException {
         Calendar calendar = getCalendarClient(email);
 
         // Get existing event first
@@ -238,10 +249,19 @@ public class CalendarService {
             }
         }
 
-        if (attendees != null) {
-            existing.setAttendees(attendees.stream()
-                .map(e -> new EventAttendee().setEmail(e))
-                .collect(Collectors.toList()));
+        if (attendees != null || optionalAttendees != null) {
+            List<EventAttendee> allAttendees = new java.util.ArrayList<>();
+            if (attendees != null) {
+                attendees.stream()
+                    .map(e -> new EventAttendee().setEmail(e.trim()))
+                    .forEach(allAttendees::add);
+            }
+            if (optionalAttendees != null) {
+                optionalAttendees.stream()
+                    .map(e -> new EventAttendee().setEmail(e.trim()).setOptional(true))
+                    .forEach(allAttendees::add);
+            }
+            existing.setAttendees(allAttendees);
         }
 
         return calendar.events().update(calendarId, eventId, existing).execute();

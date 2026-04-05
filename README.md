@@ -176,14 +176,16 @@ Options:
 - `--end <datetime>` - End time (required, ISO 8601)
 - `--description <d>` - Event description
 - `--location <l>` - Event location
-- `--attendees <emails>` - Attendees (comma-separated)
+- `--attendees <emails>` - Required attendees (comma-separated)
+- `--optional-attendees <emails>` - Optional attendees (comma-separated)
 - `--all-day` - Create all-day event (use YYYY-MM-DD for start/end)
 
 Examples:
 ```bash
 jgccli create you@gmail.com primary --summary "Meeting" --start 2024-01-15T10:00:00 --end 2024-01-15T11:00:00
 jgccli create you@gmail.com primary --summary "Vacation" --start 2024-01-20 --end 2024-01-25 --all-day
-jgccli create you@gmail.com primary --summary "Team Sync" --start 2024-01-15T14:00:00 --end 2024-01-15T15:00:00 --attendees a@x.com,b@x.com
+jgccli create you@gmail.com primary --summary "Team Sync" --start 2024-01-15T14:00:00 --end 2024-01-15T15:00:00 \
+    --attendees a@x.com,b@x.com --optional-attendees c@x.com
 ```
 
 ### update

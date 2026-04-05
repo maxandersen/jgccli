@@ -38,8 +38,11 @@ public class CreateCommand implements Callable<Integer> {
     @Option(names = "--location", description = "Event location")
     String location;
 
-    @Option(names = "--attendees", description = "Attendees (comma-separated emails)")
+    @Option(names = "--attendees", description = "Required attendees (comma-separated emails)")
     String attendees;
+
+    @Option(names = "--optional-attendees", description = "Optional attendees (comma-separated emails)")
+    String optionalAttendees;
 
     @Option(names = "--all-day", description = "Create all-day event")
     boolean allDay;
@@ -49,12 +52,15 @@ public class CreateCommand implements Callable<Integer> {
         List<String> attendeeList = attendees != null 
             ? Arrays.asList(attendees.split(","))
             : null;
+        List<String> optionalAttendeeList = optionalAttendees != null
+            ? Arrays.asList(optionalAttendees.split(","))
+            : null;
 
         Event event = service.createEvent(
             email, calendarId,
             summary, description, location,
             start, end,
-            attendeeList, allDay
+            attendeeList, optionalAttendeeList, allDay
         );
 
         System.out.println("Created: " + event.getId());
