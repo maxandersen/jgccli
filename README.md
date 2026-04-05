@@ -15,11 +15,14 @@ The command structure is identical, making it easy to switch between them.
 
 ```bash
 # Run directly from GitHub
-jbang https://github.com/maxandersen/jgccli/blob/main/src/main/java/main.java --help
+jbang https://github.com/maxandersen/jgccli/blob/main/src/main/java/jgccli.java --help
+
+# Install as 'jgccli' command
+jbang app install https://github.com/maxandersen/jgccli/blob/main/src/main/java/jgccli.java
+jgccli --help
 
 # Or clone and run locally
-jbang src/main/java/main.java --help
-jbang src/main/java/main.java accounts list
+jbang src/main/java/jgccli.java --help
 ```
 
 ## Build with Maven
