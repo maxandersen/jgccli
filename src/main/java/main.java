@@ -32,15 +32,8 @@
 
 //FILES application.properties=../resources/application.properties
 
-// This is a JBang bootstrap file for running jgccli directly.
-// The actual entry point is handled by Quarkus Picocli via GccliCommand.
+// JBang bootstrap for jgccli - Quarkus Picocli handles entry via @TopCommand
 // 
 // Usage:
 //   jbang main.java --help
-//   jbang main.java accounts list
 //   jbang https://github.com/maxandersen/jgccli/blob/main/src/main/java/main.java --help
-
-public class main {
-    // Quarkus Picocli handles the main entry point via @TopCommand annotation
-    // on GccliCommand. This class exists only as the JBang entry point.
-}
