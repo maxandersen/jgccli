@@ -63,6 +63,10 @@ public class EventCommand implements Callable<Integer> {
             printKeyValue("Attendees", attendees);
         }
 
+        if (event.getTransparency() != null) {
+            printKeyValue("Availability", "transparent".equals(event.getTransparency()) ? "free" : "busy");
+        }
+
         printKeyValue("Status", event.getStatus());
         printKeyValue("Link", event.getHtmlLink());
 

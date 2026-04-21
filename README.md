@@ -178,6 +178,7 @@ Options:
 - `--location <l>` - Event location
 - `--attendees <emails>` - Required attendees (comma-separated)
 - `--optional-attendees <emails>` - Optional attendees (comma-separated)
+- `--availability <busy|free>` - Whether the event blocks calendar availability
 - `--all-day` - Create all-day event (use YYYY-MM-DD for start/end)
 
 Examples:
@@ -186,6 +187,8 @@ jgccli create you@gmail.com primary --summary "Meeting" --start 2024-01-15T10:00
 jgccli create you@gmail.com primary --summary "Vacation" --start 2024-01-20 --end 2024-01-25 --all-day
 jgccli create you@gmail.com primary --summary "Team Sync" --start 2024-01-15T14:00:00 --end 2024-01-15T15:00:00 \
     --attendees a@x.com,b@x.com --optional-attendees c@x.com
+jgccli create you@gmail.com primary --summary "Focus time" --start 2024-01-15T14:00:00 --end 2024-01-15T15:00:00 --availability busy
+jgccli create you@gmail.com primary --summary "FYI webinar" --start 2024-01-15T14:00:00 --end 2024-01-15T15:00:00 --availability free
 ```
 
 ### update
@@ -201,6 +204,7 @@ Options: same as create (all optional).
 Example:
 ```bash
 jgccli update you@gmail.com primary abc123 --summary "Updated Meeting" --location "Room 2"
+jgccli update you@gmail.com primary abc123 --availability free
 ```
 
 ### delete

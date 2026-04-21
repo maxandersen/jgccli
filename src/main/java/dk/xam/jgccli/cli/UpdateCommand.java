@@ -50,6 +50,9 @@ public class UpdateCommand implements Callable<Integer> {
     @Option(names = "--all-day", description = "Mark as all-day event")
     Boolean allDay;
 
+    @Option(names = "--availability", description = "Availability for the event: busy or free")
+    String availability;
+
     @Override
     public Integer call() throws Exception {
         List<String> attendeeList = attendees != null 
@@ -63,7 +66,7 @@ public class UpdateCommand implements Callable<Integer> {
             email, calendarId, eventId,
             summary, description, location,
             start, end,
-            attendeeList, optionalAttendeeList, allDay
+            attendeeList, optionalAttendeeList, allDay, availability
         );
 
         System.out.println("Updated: " + event.getId());
