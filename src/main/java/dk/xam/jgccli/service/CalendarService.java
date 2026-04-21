@@ -178,14 +178,15 @@ public class CalendarService {
     public Event createEvent(String email, String calendarId,
                              String summary, String description, String location,
                              String start, String end,
-                             List<String> attendees, List<String> optionalAttendees, 
-                             boolean allDay) throws IOException {
+                             List<String> attendees, List<String> optionalAttendees,
+                             boolean allDay, String availability) throws IOException {
         Calendar calendar = getCalendarClient(email);
 
         Event event = new Event()
             .setSummary(summary)
             .setDescription(description)
-            .setLocation(location);
+            .setLocation(location)
+            .setTransparency(toTransparency(availability));
 
         if (allDay) {
             event.setStart(new EventDateTime().setDate(new DateTime(start)));
@@ -217,7 +218,7 @@ public class CalendarService {
                              String summary, String description, String location,
                              String start, String end,
                              List<String> attendees, List<String> optionalAttendees,
-                             Boolean allDay) throws IOException {
+                             Boolean allDay, String availability) throws IOException {
         Calendar calendar = getCalendarClient(email);
 
         // Get existing event first
@@ -264,7 +265,23 @@ public class CalendarService {
             existing.setAttendees(allAttendees);
         }
 
+        if (availability != null) {
+            existing.setTransparency(toTransparency(availability));
+        }
+
         return calendar.events().update(calendarId, eventId, existing).execute();
+    }
+
+    private String toTransparency(String availability) {
+        if (availability == null || availability.isBlank()) {
+            return null;
+        }
+
+        return switch (availability.trim().toLowerCase(Locale.ROOT)) {
+            case "busy" -> "opaque";
+            case "free" -> "transparent";
+            default -> throw new GccliException("Invalid availability '" + availability + "'. Use 'busy' or 'free'.");
+        };
     }
 
     public void deleteEvent(String email, String calendarId, String eventId) throws IOException {

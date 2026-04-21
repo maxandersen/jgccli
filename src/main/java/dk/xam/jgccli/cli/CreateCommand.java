@@ -47,6 +47,9 @@ public class CreateCommand implements Callable<Integer> {
     @Option(names = "--all-day", description = "Create all-day event")
     boolean allDay;
 
+    @Option(names = "--availability", description = "Availability for the event: busy or free")
+    String availability;
+
     @Override
     public Integer call() throws Exception {
         List<String> attendeeList = attendees != null 
@@ -60,7 +63,7 @@ public class CreateCommand implements Callable<Integer> {
             email, calendarId,
             summary, description, location,
             start, end,
-            attendeeList, optionalAttendeeList, allDay
+            attendeeList, optionalAttendeeList, allDay, availability
         );
 
         System.out.println("Created: " + event.getId());
